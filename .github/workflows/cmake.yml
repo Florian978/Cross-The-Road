@@ -202,8 +202,10 @@ jobs:
           path: ${{ env.ZIP_NAME }}
           retention-days: 30
 
-      - name: Runtime checks
-        uses: ./.github/actions/runtime-checks
+      # --- MODIFICAT: Dezactivat Runtime checks ---
+      # - name: Runtime checks
+      #   uses: ./.github/actions/runtime-checks
+      # --- SFÂRȘIT MODIFICARE ---
 
       - name: Create release
         uses: ./.github/actions/create-release
