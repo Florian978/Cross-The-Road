@@ -40,11 +40,18 @@ if(UNIX AND NOT APPLE)
 endif()
 
 # ================================================
-# --- REGULA DE INSTALARE (ASTA LIPSEA) ---
+# --- Reguli de Instalare (pentru CI) ---
 # ================================================
-# Acest pas îi spune lui CMake ce să copieze în timpul pasului "Install"
-# "bin" este folderul ${{ env.BIN_DIR }} din fișierul tău cmake.yml
 
+# 1. Regula de instalare pentru executabil (pentru Ubuntu/Windows)
+# "bin" este folderul ${{ env.BIN_DIR }} din fișierul tău cmake.yml
 install(TARGETS ${MAIN_EXECUTABLE_NAME}
         RUNTIME DESTINATION bin
 )
+
+# 2. Regula de instalare pentru launcher-ul de macOS (pentru macOS)
+if(APPLE)
+    install(FILES launcher.command
+            DESTINATION bin
+    )
+endif()
