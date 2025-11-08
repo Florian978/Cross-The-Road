@@ -80,6 +80,7 @@ void Joc::actualizeaza() {
     }
 }
 
+// cppcheck-suppress unusedFunction
 void Joc::proceseazaInput(const std::string& miscare) {
     if (jucator.eMort()) return;
 
@@ -89,12 +90,13 @@ void Joc::proceseazaInput(const std::string& miscare) {
         jucator.muta(0, -1, limitaStanga, latimeLume);
     } else if (miscare == "STANGA") {
         jucator.muta(-1, 0, limitaStanga, latimeLume);
-    } else if (miscare == "DREAPTA") {
+    } else if (miscare == "DREPTA") {
         jucator.muta(1, 0, limitaStanga, latimeLume);
     } else if (miscare == "ASTEAPTA") {
     }
 }
 
+// cppcheck-suppress unusedFunction
 bool Joc::esteJoculTerminat() const {
     return jucator.eMort();
 }

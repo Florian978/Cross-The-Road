@@ -68,6 +68,7 @@ void Jucator::moare() {
     this->esteMort = true;
 }
 
+// cppcheck-suppress unusedFunction
 void Jucator::reseteaza() {
     this->x = 0;
     this->y = 0;
