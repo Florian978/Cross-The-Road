@@ -1,6 +1,6 @@
 #include "Joc.h"
 #include <iostream>
-#include <algorithm> // Pentru std::max/min
+#include <algorithm>
 
 Joc::Joc(const char* numeJucator)
     : jucator(numeJucator, 15, 0),
@@ -9,7 +9,6 @@ Joc::Joc(const char* numeJucator)
       limitaStanga(0),
       generatorRandom(std::random_device{}())
 {
-    // Inițializează lumea cu 5 benzi sigure
     for (int i = 0; i < 5; ++i) {
         harti.push_back(Banda(TipBanda::IARBA_SIGURA, i, generatorRandom));
     }
@@ -43,7 +42,6 @@ void Joc::genereazaBandaNoua() {
 void Joc::actualizeaza() {
     if (jucator.eMort()) return;
 
-    // --- 1. Logica Buștenilor (Mișcarea pasivă) ---
     int yJucator = jucator.getY();
     if (yJucator >= 0 && yJucator < (int)harti.size()) { // FIX: (int)
         Banda& bandaCurenta = harti[yJucator];
@@ -56,16 +54,13 @@ void Joc::actualizeaza() {
         }
     }
 
-    // --- 2. Mișcarea Lumii (Obstacolele) ---
     for (auto& banda : harti) {
         banda.actualizeazaBanda(latimeLume);
     }
 
-    // --- 3. Verificarea Coliziunilor (După mișcare) ---
     yJucator = jucator.getY();
     int xJucator = jucator.getX();
 
-    // Verifică ieșirea din lume
     if (yJucator < 0 || yJucator >= (int)harti.size() || // FIX: (int)
         xJucator < limitaStanga - 2 || xJucator > latimeLume + 2) {
         std::cout << "Jucatorul a iesit din lume!\n";
@@ -80,13 +75,11 @@ void Joc::actualizeaza() {
         jucator.moare();
     }
 
-    // --- 4. Generarea Hărții ---
     while (jucator.getScor() + 5 > (int)harti.size()) { // FIX: (int)
         genereazaBandaNoua();
     }
 }
 
-// cppcheck-suppress unusedFunction
 void Joc::proceseazaInput(const std::string& miscare) {
     if (jucator.eMort()) return;
 
@@ -103,7 +96,6 @@ void Joc::proceseazaInput(const std::string& miscare) {
     }
 }
 
-// cppcheck-suppress unusedFunction
 bool Joc::esteJoculTerminat() const {
     return jucator.eMort();
 }
