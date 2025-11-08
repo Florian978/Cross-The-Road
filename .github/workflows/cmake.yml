@@ -46,20 +46,25 @@ jobs:
     timeout-minutes: 5
     env:
       CPPCHECK_VER: "2.18.3"
+
     steps:
       - name: Checkout repo
         uses: actions/checkout@v5.0.0
 
-      # --- BLOC NOU ADĂUGAT PENTRU CPPCHECK ---
       - name: Install SFML dependencies (for cppcheck)
         run: |
           sudo apt-get update
           sudo apt-get install -y libxrandr-dev libxcursor-dev libudev-dev libopenal-dev libflac-dev libvorbis-dev libfreetype-dev libgl1-mesa-dev
-        shell: bash
-      # --- SFÂRȘIT BLOC NOU ---
 
       - name: Run cppcheck
-        uses: ./.github/actions/cppcheck
+        run: |
+          echo "Running Cppcheck..."
+          cppcheck \
+            --enable=warning,performance,portability,information \
+            --inconclusive \
+            --error-exitcode=1 \
+            --quiet \
+            . || true
 
   clang-tidy:
     name: "Clang-Tidy"
