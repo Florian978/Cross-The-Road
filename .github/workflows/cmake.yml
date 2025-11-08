@@ -49,6 +49,15 @@ jobs:
     steps:
       - name: Checkout repo
         uses: actions/checkout@v5.0.0
+
+      # --- BLOC NOU ADĂUGAT PENTRU CPPCHECK ---
+      - name: Install SFML dependencies (for cppcheck)
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libxrandr-dev libxcursor-dev libudev-dev libopenal-dev libflac-dev libvorbis-dev libfreetype-dev libgl1-mesa-dev
+        shell: bash
+      # --- SFÂRȘIT BLOC NOU ---
+
       - name: Run cppcheck
         uses: ./.github/actions/cppcheck
 
@@ -61,6 +70,15 @@ jobs:
     steps:
       - name: Checkout repo
         uses: actions/checkout@v5.0.0
+
+      # --- BLOC NOU ADĂUGAT PENTRU CLANG-TIDY ---
+      - name: Install SFML dependencies (for clang-tidy)
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libxrandr-dev libxcursor-dev libudev-dev libopenal-dev libflac-dev libvorbis-dev libfreetype-dev libgl1-mesa-dev
+        shell: bash
+      # --- SFÂRȘIT BLOC NOU ---
+
       - name: Run clang-tidy
         uses: ./.github/actions/clang-tidy
 
