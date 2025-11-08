@@ -12,7 +12,7 @@ void Jucator::copieazaNume(const char* altNume) {
 }
 
 Jucator::Jucator(const char* nume, int xStart, int yStart)
-    : nume(nullptr), x(xStart), y(yStart), scor(0), esteMort(false) { // FIX: Reordonat
+    : nume(nullptr), x(xStart), y(yStart), scor(0), esteMort(false) {
     copieazaNume(nume);
 }
 
@@ -21,7 +21,7 @@ Jucator::~Jucator() {
 }
 
 Jucator::Jucator(const Jucator& altul)
-    : nume(nullptr), x(altul.x), y(altul.y), scor(altul.scor), esteMort(altul.esteMort) { // FIX: Reordonat
+    : nume(nullptr), x(altul.x), y(altul.y), scor(altul.scor), esteMort(altul.esteMort) {
     copieazaNume(altul.nume);
 }
 

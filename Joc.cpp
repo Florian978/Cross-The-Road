@@ -43,7 +43,7 @@ void Joc::actualizeaza() {
     if (jucator.eMort()) return;
 
     int yJucator = jucator.getY();
-    if (yJucator >= 0 && yJucator < (int)harti.size()) { // FIX: (int)
+    if (yJucator >= 0 && yJucator < (int)harti.size()) {
         Banda& bandaCurenta = harti[yJucator];
 
         if (bandaCurenta.getTip() == TipBanda::RAU) {
@@ -61,7 +61,7 @@ void Joc::actualizeaza() {
     yJucator = jucator.getY();
     int xJucator = jucator.getX();
 
-    if (yJucator < 0 || yJucator >= (int)harti.size() || // FIX: (int)
+    if (yJucator < 0 || yJucator >= (int)harti.size() ||
         xJucator < limitaStanga - 2 || xJucator > latimeLume + 2) {
         std::cout << "Jucatorul a iesit din lume!\n";
         jucator.moare();
@@ -75,7 +75,7 @@ void Joc::actualizeaza() {
         jucator.moare();
     }
 
-    while (jucator.getScor() + 5 > (int)harti.size()) { // FIX: (int)
+    while (jucator.getScor() + 5 > (int)harti.size()) {
         genereazaBandaNoua();
     }
 }
@@ -92,7 +92,6 @@ void Joc::proceseazaInput(const std::string& miscare) {
     } else if (miscare == "DREAPTA") {
         jucator.muta(1, 0, limitaStanga, latimeLume);
     } else if (miscare == "ASTEAPTA") {
-        // Nu face nimic, doar lasă lumea să se miște (în noul main)
     }
 }
 
@@ -106,7 +105,7 @@ std::ostream& operator<<(std::ostream& os, const Joc& j) {
     os << "--------------------- Harta ---------------------\n";
 
     int yStart = std::max(0, j.jucator.getY() - 3);
-    int yEnd = std::min((int)j.harti.size(), j.jucator.getY() + 8); // FIX: (int)
+    int yEnd = std::min((int)j.harti.size(), j.jucator.getY() + 8);
 
     for (int i = yStart; i < yEnd; ++i) {
         os << ((i == j.jucator.getY()) ? ">> " : "   ");
