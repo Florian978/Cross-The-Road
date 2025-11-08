@@ -1,18 +1,13 @@
-//
-// Created by 27042 on 11/8/2025.
-//
 
 #include "Obstacol.h"
 
 Obstacol::Obstacol(int x, int y, int latime, int viteza, int directie, TipObstacol tip)
     : x(x), y(y), latime(latime), viteza(viteza), directie(directie), tip(tip) {}
 
-// Funcție "non-trivială" #1 (completată)
 void Obstacol::actualizeaza(int limitaStanga, int limitaDreapta) {
-    // 1. Mișcă obstacolul
+
     this->x += this->viteza * this->directie;
 
-    // 2. Implementează "wrap-around" (mașinile re-apar)
     if (this->directie == 1 && this->x > limitaDreapta + 1) {
         this->x = limitaStanga - this->latime;
     }
@@ -21,13 +16,11 @@ void Obstacol::actualizeaza(int limitaStanga, int limitaDreapta) {
     }
 }
 
-// Funcție "non-trivială" #2 (detecție coliziune)
 bool Obstacol::verificaColiziune(int jucatorX, int jucatorY) const {
     if (jucatorY != this->y) {
-        return false; // Nu sunt pe aceeași bandă
+        return false;
     }
 
-    // Verificare coliziune AABB
     return (jucatorX >= this->x) && (jucatorX < (this->x + this->latime));
 }
 

@@ -1,6 +1,3 @@
-//
-// Created by 27042 on 11/8/2025.
-//
 
 #ifndef OOP_OBSTACOL_H
 #define OOP_OBSTACOL_H
@@ -14,7 +11,7 @@ class Obstacol {
 private:
     int x, y, latime;
     int viteza;
-    int directie; // -1 (stânga) sau 1 (dreapta)
+    int directie;
     TipObstacol tip;
 
 public:
@@ -23,7 +20,6 @@ public:
     void actualizeaza(int limitaStanga, int limitaDreapta);
     bool verificaColiziune(int jucatorX, int jucatorY) const;
 
-    // Getteri necesari pentru logica de joc
     int getX() const;
     int getY() const;
     int getViteza() const;

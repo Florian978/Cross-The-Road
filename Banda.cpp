@@ -5,7 +5,7 @@
 #include "Banda.h"
 
 Banda::Banda(TipBanda tip, int y, std::mt19937& generator) : tip(tip), y(y) {
-    // Generare procedurală
+
     std::uniform_int_distribution<> distViteza(1, 3);
     std::uniform_int_distribution<> distLatimeMasina(2, 4);
     std::uniform_int_distribution<> distLatimeBustean(3, 6);
@@ -34,7 +34,7 @@ void Banda::actualizeazaBanda(int latimeLume) {
     }
 }
 
-// Funcție "complexă" #1 (completată)
+
 StatusBanda Banda::verificaColiziuniPeBanda(int jucatorX, int jucatorY) const {
     if (jucatorY != this->y) return StatusBanda::OK;
 

@@ -1,6 +1,3 @@
-//
-// Created by 27042 on 11/8/2025.
-//
 
 #ifndef OOP_BANDA_H
 #define OOP_BANDA_H
@@ -18,19 +15,16 @@ private:
     TipBanda tip;
     int y;
 
-    // Compunere
     std::vector<Obstacol> obstacole;
 
 public:
-    // Constructorul va crea și obstacolele!
+
     Banda(TipBanda tip, int y, std::mt19937& generator);
 
     void actualizeazaBanda(int latimeLume);
 
-    // Funcție "complexă" #1
     StatusBanda verificaColiziuniPeBanda(int jucatorX, int jucatorY) const;
 
-    // Funcție ajutătoare pentru logica buștenilor
     int getVitezaBusteanLa(int jucatorX, int jucatorY) const;
 
     int getY() const;

@@ -1,64 +1,76 @@
 
+#include <SFML/Graphics.hpp>
 #include <iostream>
-#include <fstream>
-#include <string>
-#include <vector>
-#include <chrono> // Pentru pauză
-#include <thread> // Pentru pauză
 #include "Joc.h"
 
 int main() {
-    std::cout << "Start Joc Crossy Road (Simulare din fisier)!\n";
 
-    // --- Creare Obiecte ---
-    Joc joc("Gigel");
+    sf::RenderWindow window(sf::VideoMode(800, 600), "Crossy Road - Tema 1");
+    window.setFramerateLimit(60); // Rulează la 60 FPS
 
-    // --- Testare "Regula celor 3" (cerință) ---
-    std::cout << "\n--- Testare Regula celor 3 ---\n";
-    Jucator jTest("Test");
-    Jucator jCopie = jTest; // Test Constructor de Copiere
-    Jucator jAtrib;
-    jAtrib = jTest; // Test Operator=
-    std::cout << "Testare Regula celor 3 OK.\n--- Incepe Simularea ---\n";
+    Joc joc("Gaina");
 
-    // --- Citire din 'tastatura.txt' ---
-    std::ifstream fisierInput("tastatura.txt");
-    if (!fisierInput.is_open()) {
-        std::cerr << "EROARE: Nu am putut deschide 'tastatura.txt'!" << std::endl;
-        return 1;
-    }
+    sf::Clock gameClock;
+    const sf::Time timpPePas = sf::seconds(0.5f);
+    sf::Time timpAcumulat = sf::Time::Zero;
 
-    std::string miscare;
-
-    // Afișează starea inițială
+    std::cout << "--- START ---" << std::endl;
+    std::cout << "Foloseste sagetile pentru a te misca. Inchide fereastra pentru a iesi." << std::endl;
     std::cout << joc;
 
-    // Citește fiecare mișcare din fișier
-    while (!joc.esteJoculTerminat() && fisierInput >> miscare) {
-        std::cout << "\n>>> Comanda citita: " << miscare << "\n";
 
-        // 1. Procesează inputul
-        joc.proceseazaInput(miscare);
+    while (window.isOpen()) {
 
-        // 2. Actualizează lumea (mașinile se mișcă, coliziunile se verifică)
-        joc.actualizeaza();
+        sf::Event event;
+        while (window.pollEvent(event)) {
 
-        // 3. Afișează starea nouă
-        std::cout << joc;
+            if (event.type == sf::Event::Closed) {
+                window.close();
+            }
 
-        // O mică pauză ca să poți citi ce se întâmplă
-        // Comentează linia de mai jos dacă vrei viteză maximă
-        std::this_thread::sleep_for(std::chrono::milliseconds(500));
+            if (event.type == sf::Event::KeyPressed) {
+
+                if (joc.esteJoculTerminat()) continue;
+
+                if (event.key.code == sf::Keyboard::Up) {
+                    joc.proceseazaInput("SUS");
+                    joc.actualizeaza();
+                    std::cout << joc;
+                } else if (event.key.code == sf::Keyboard::Down) {
+                    joc.proceseazaInput("JOS");
+                    joc.actualizeaza();
+                    std::cout << joc;
+                } else if (event.key.code == sf::Keyboard::Left) {
+                    joc.proceseazaInput("STANGA");
+                    joc.actualizeaza();
+                    std::cout << joc;
+                } else if (event.key.code == sf::Keyboard::Right) {
+                    joc.proceseazaInput("DREAPTA");
+                    joc.actualizeaza();
+                    std::cout << joc;
+                }
+            }
+        }
+
+
+        timpAcumulat += gameClock.restart();
+
+        if (timpAcumulat >= timpPePas) {
+            if (!joc.esteJoculTerminat()) {
+                std::cout << "\n>>> (Tick-ul lumii - masinile se misca)\n";
+
+                joc.actualizeaza();
+                std::cout << joc;
+            }
+
+            timpAcumulat -= timpPePas;
+        }
+
+        window.clear(sf::Color::Black);
+
+        window.display();
     }
 
-    fisierInput.close();
-
-    std::cout << "\n=== Simularea din 'tastatura.txt' s-a terminat ===\n";
-    if (joc.esteJoculTerminat()) {
-        std::cout << "Jucatorul a murit in timpul simularii.\n";
-    } else {
-        std::cout << "Jucatorul a supravietuit tuturor comenzilor.\n";
-    }
-
+    std::cout << "=== Jocul s-a terminat ===\n";
     return 0;
 }

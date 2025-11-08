@@ -1,6 +1,3 @@
-//
-// Created by 27042 on 11/8/2025.
-//
 
 #ifndef OOP_JOC_H
 #define OOP_JOC_H
@@ -14,17 +11,14 @@
 
 class Joc {
 private:
-    // Compunere
     Jucator jucator;
     std::vector<Banda> harti;
     int scorMaxim;
     int latimeLume;
     int limitaStanga;
 
-    // Generator random
     std::mt19937 generatorRandom;
 
-    // Funcție private
     void genereazaBandaNoua();
 
 public:
