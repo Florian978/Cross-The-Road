@@ -1,22 +1,21 @@
-
 #include "Joc.h"
 #include <iostream>
-#include <algorithm>
+#include <algorithm> // Pentru std::max/min
 
 Joc::Joc(const char* numeJucator)
-    : jucator(numeJucator, 15, 0), // Începe la mijloc
+    : jucator(numeJucator, 15, 0),
       scorMaxim(0),
       latimeLume(30),
       limitaStanga(0),
-      generatorRandom(std::random_device{}()) // Inițializează generatorul
+      generatorRandom(std::random_device{}())
 {
+    // Inițializează lumea cu 5 benzi sigure
     for (int i = 0; i < 5; ++i) {
         harti.push_back(Banda(TipBanda::IARBA_SIGURA, i, generatorRandom));
     }
     scorMaxim = 4;
     genereazaBandaNoua();
 }
-
 
 void Joc::genereazaBandaNoua() {
     std::uniform_int_distribution<> distTip(0, 2);
@@ -41,12 +40,12 @@ void Joc::genereazaBandaNoua() {
     harti.push_back(Banda(tipNou, yNou, generatorRandom));
 }
 
-
 void Joc::actualizeaza() {
     if (jucator.eMort()) return;
 
+    // --- 1. Logica Buștenilor (Mișcarea pasivă) ---
     int yJucator = jucator.getY();
-    if (yJucator >= 0 && yJucator < harti.size()) {
+    if (yJucator >= 0 && yJucator < (int)harti.size()) { // FIX: (int)
         Banda& bandaCurenta = harti[yJucator];
 
         if (bandaCurenta.getTip() == TipBanda::RAU) {
@@ -57,14 +56,17 @@ void Joc::actualizeaza() {
         }
     }
 
+    // --- 2. Mișcarea Lumii (Obstacolele) ---
     for (auto& banda : harti) {
         banda.actualizeazaBanda(latimeLume);
     }
 
+    // --- 3. Verificarea Coliziunilor (După mișcare) ---
     yJucator = jucator.getY();
     int xJucator = jucator.getX();
 
-    if (yJucator < 0 || yJucator >= harti.size() ||
+    // Verifică ieșirea din lume
+    if (yJucator < 0 || yJucator >= (int)harti.size() || // FIX: (int)
         xJucator < limitaStanga - 2 || xJucator > latimeLume + 2) {
         std::cout << "Jucatorul a iesit din lume!\n";
         jucator.moare();
@@ -78,11 +80,13 @@ void Joc::actualizeaza() {
         jucator.moare();
     }
 
-    while (jucator.getScor() + 5 > harti.size()) {
+    // --- 4. Generarea Hărții ---
+    while (jucator.getScor() + 5 > (int)harti.size()) { // FIX: (int)
         genereazaBandaNoua();
     }
 }
 
+// cppcheck-suppress unusedFunction
 void Joc::proceseazaInput(const std::string& miscare) {
     if (jucator.eMort()) return;
 
@@ -95,9 +99,11 @@ void Joc::proceseazaInput(const std::string& miscare) {
     } else if (miscare == "DREAPTA") {
         jucator.muta(1, 0, limitaStanga, latimeLume);
     } else if (miscare == "ASTEAPTA") {
+        // Nu face nimic, doar lasă lumea să se miște (în noul main)
     }
 }
 
+// cppcheck-suppress unusedFunction
 bool Joc::esteJoculTerminat() const {
     return jucator.eMort();
 }
@@ -108,7 +114,7 @@ std::ostream& operator<<(std::ostream& os, const Joc& j) {
     os << "--------------------- Harta ---------------------\n";
 
     int yStart = std::max(0, j.jucator.getY() - 3);
-    int yEnd = std::min((int)j.harti.size(), j.jucator.getY() + 8);
+    int yEnd = std::min((int)j.harti.size(), j.jucator.getY() + 8); // FIX: (int)
 
     for (int i = yStart; i < yEnd; ++i) {
         os << ((i == j.jucator.getY()) ? ">> " : "   ");
