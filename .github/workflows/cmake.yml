@@ -15,8 +15,7 @@ jobs:
         uses: actions/checkout@v3
 
       - name: 2. Instalează dependențele SFML
-        # Aceasta este piesa cheie pe care o avea prietenul tău
-        # Instalează bibliotecile de care SFML are nevoie pe Linux
+
         run: |
           sudo apt-get update
           sudo apt-get install -y libxrandr-dev libxcursor-dev libudev-dev libopenal-dev libflac-dev libvorbis-dev libfreetype-dev libgl1-mesa-dev
@@ -28,7 +27,6 @@ jobs:
         run: cmake -B build -DCMAKE_BUILD_TYPE=Release
 
       - name: 5. Compilare proiect (și SFML)
-        # Acest pas va dura mai mult, deoarece compilează și SFML
         run: cmake --build build --config Release
 
       - name: 6. Verificare executabil
