@@ -1,30 +1,29 @@
-# Nu primesc notă pentru că nu am pus titlu și descriere
+# Crossy Road: O Simulare OOP în C++
 
-### Folosiți template-ul corespunzător grupei voastre!
+Acest proiect reprezintă o implementare a jocului clasic **Crossy Road**. Aplicația ca o demonstrație a principiilor de Programare Orientată pe Obiecte.
 
-| Laborant  | Link template                                |
-|-----------|----------------------------------------------|
-| Dragoș B  | https://github.com/Ionnier/oop-template      |
-| Tiberiu M | https://github.com/MaximTiberiu/oop-template |
-| Marius MC | https://github.com/mcmarius/oop-template     |
+Jocul rulează interactiv, preluând date de la săgețile tastaturii (folosind SFML), în timp ce afișează starea în consolă.
 
-### Important!
+### Care este scopul proiectului?
 
-Aveți voie cu cod generat de modele de limbaj la care nu ați contribuit semnificativ doar dacă documentați riguros acest proces.
-Codul generat pus "ca să fie"/pe care nu îl înțelegeți se punctează doar pentru puncte bonus, doar în contextul
-în care oferă funcționalități ajutătoare și doar dacă are sens.
+Simulatorul oferă un cadru pentru a demonstra conceptele OOP (compunere, managementul memoriei, supraîncărcare) într-o aplicație interactivă, în timp real.
 
-Codul din proiect trebuie să poată fi ușor de înțeles și de modificat de către altcineva. Pentru detalii, veniți la ore.
+Utilizatorii pot controla un `Jucator` pentru a naviga un mediu plin de obstacole, cu scopul de a obține un scor cât mai mare. Proiectul demonstrează gestionarea unei stări complexe și a unei logici asincrone (jucătorul se mișcă la input, dar lumea se mișcă la un "tick" de ceas).
 
-O cerință nu se consideră îndeplinită dacă este realizată doar prin cod generat.
+### Funcționalități cheie
 
-- **Fără cod de umplutură/fără sens!**
-- **Fără copy-paste!**
-- **Fără variabile globale!**
-- **Fără atribute publice!**
-- **Pentru T2 și T3, fără date în cod!** Datele vor fi citite din fișier, aveți exemple destule.
-- **Obligatoriu** fișiere cu date mai multe din care să citiți, obligatoriu cu biblioteci externe: fișiere (local sau server) sau baze de date
-- obligatoriu (TBD) să integrați cel puțin două biblioteci externe pe lângă cele pentru stocare
+Aplicația se concentrează pe trei aspecte principale ale simulării:
+
+1.  **Managementul Stării:** Gestionează starea jucătorului (poziție, scor, viață) și logica de detecție a coliziunilor. Evaluează dacă jucătorul este lovit de o mașină (pe șosea) sau dacă se îneacă (pe râu).
+2.  **Simularea Lumii (Logică "Tick"):** Rulează o buclă de joc (game loop) independentă. `Obstacolele` (mașini, bușteni) se mișcă automat la intervale fixe. Logica include și mișcarea "pasivă" a jucătorului (de exemplu, fiind purtat de un buștean).
+3.  **Generare Procedurală:** Harta este infinită și se generează procedural. Noi `Benzi` (șosele, râuri, iarbă) sunt adăugate automat în `Joc` pe măsură ce jucătorul avansează.
+
+### Modelarea Arhitecturii OOP
+
+Jocul nu este vizualizat grafic (fereastra SFML rămâne neagră), dar este reprezentat complet intern prin mai multe structuri compuse.
+
+Acesta este modelat ierarhic: un `Joc` (clasa principală) conține un obiect `Jucator` și o colecție (un `std::vector`) de `Benzi`. Fiecare `Banda`, la rândul ei, este compusă dintr-o colecție de `Obstacole`.
+
 
 ### Tema 0
 
